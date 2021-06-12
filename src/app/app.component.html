@@ -1,0 +1,55 @@
+<mat-toolbar color="primary" class="toolbar">
+
+  <h1>Search Portal</h1>
+
+  <mat-card>
+    <mat-card-content>
+      <div class="search-box">
+        <mat-form-field class="form">
+          <input type="text" placeholder="Search..." (keyup)="$event.keyCode != 13 ? searchSugg() : search()"
+            aria-label="search" [(ngModel)]="searchInput" matInput [matAutocomplete]="auto">
+          <button *ngIf="searchInput" matSuffix mat-icon-button aria-label="Clear" (click)="searchInput=''">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+        <mat-autocomplete #auto="matAutocomplete">
+          <ng-container *ngIf="showSug">
+            <mat-option *ngFor="let option of suggestion" [value]="option.name">
+              {{option.name}}
+            </mat-option>
+          </ng-container>
+
+        </mat-autocomplete>
+
+        <button mat-flat-button color="accent" (click)="search()">Submit</button>
+      </div>
+    </mat-card-content>
+
+  </mat-card>
+
+</mat-toolbar>
+
+<div class="toogle-view">
+  <button mat-stroked-button color="warn" (click)="result=[];searchInput=''">Clear Search</button>
+  <span></span>
+  <mat-button-toggle-group aria-label="View Style" value="grid">
+    <mat-button-toggle value="grid" (click)="isListView=false">Grid View</mat-button-toggle>
+    <mat-button-toggle value="list" (click)="isListView=true">List View</mat-button-toggle>
+  </mat-button-toggle-group>
+</div>
+
+
+
+<div class="card-container" [class.list-view]="isListView">
+  <mat-card class="card" *ngFor="let r of result">
+    <mat-card-header>
+      <mat-card-title>{{r.name}}</mat-card-title>
+      <mat-card-subtitle>{{r.email}}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <p>
+        {{r.body}}
+      </p>
+    </mat-card-content>
+  </mat-card>
+</div>
