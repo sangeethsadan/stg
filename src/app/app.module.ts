@@ -11,7 +11,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpCacheInterceptor } from './interceptors/http-cache.interceptor';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
@@ -22,7 +21,6 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
     MatAutocompleteModule,
