@@ -17,6 +17,7 @@ export class AppComponent {
   suggestion: any = [];
   result: any = [];
   isListView: boolean = false;
+  showSpinner: boolean = false;
 
   public searchInput = '';
   showSug: boolean = false;
@@ -24,15 +25,18 @@ export class AppComponent {
   searchSugg() {
     this.suggestion = [];
     if (this.searchInput.length > 2) {
+      this.showSpinner = true;
       this.searchService.search(this.searchInput)
         .pipe(
           debounceTime(500),
           distinctUntilChanged())
         .subscribe(
-          res => {
+          (res) => {
             this.showSug = true;
             this.suggestion = res;
-          }
+          },
+          () => { },
+          () => this.showSpinner = false
         );
     }
   }
@@ -40,6 +44,7 @@ export class AppComponent {
   search() {
     this.showSug = false;
     if (this.searchInput.length > 2) {
+      this.showSpinner = true;
       this.searchService.search(this.searchInput)
         .pipe(
           debounceTime(500),
@@ -51,8 +56,10 @@ export class AppComponent {
                 ...x,
                 body: x?.body?.length || 0 > 64 ? x.body.slice(0, 64) + '...' : x.body
               }
-            })?.splice(0,20);
-          }
+            })?.splice(0, 20);
+          },
+          () => { },
+          () => this.showSpinner = false
         );
     }
   }
